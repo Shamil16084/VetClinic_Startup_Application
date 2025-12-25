@@ -59,6 +59,22 @@ const initialDoctors = [
     location: "Baku, Khatai District",
     availableSlots: ["08:00", "10:00", "14:30", "16:00"],
   },
+  {
+    id: 7,
+    name: "Dr. Farhad Pashayev",
+    specialty: "Small Animals",
+    contactNumber: "050 772 21 07",
+    location: "Baku, Nizami District",
+    availableSlots: ["09:00", "11:30", "14:00", "16:30"],
+  },
+  {
+    id: 8,
+    name: "Dr. Amin Tanriverdiyev",
+    specialty: "Large Animals",
+    contactNumber: "050 316 92 58",
+    location: "Baku, Sabunchu District",
+    availableSlots: ["08:30", "10:30", "13:00", "15:30"],
+  },
 ]
 
 export default function BookingPage() {
@@ -88,7 +104,7 @@ export default function BookingPage() {
     setSelectedSlot("")
   }
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     // Validation
     if (!petName.trim()) {
       setMessage({ type: "error", text: "Please enter your pet's name" })
@@ -129,6 +145,29 @@ export default function BookingPage() {
         return doc
       }),
     )
+
+    // Send email notification
+    try {
+      await fetch("/api/send-booking-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          doctorName: selectedDoctor.name,
+          doctorSpecialty: selectedDoctor.specialty,
+          doctorLocation: selectedDoctor.location,
+          doctorContact: selectedDoctor.contactNumber,
+          petName,
+          ownerPhone,
+          slot: selectedSlot,
+          bookedAt: new Date().toLocaleString(),
+        }),
+      })
+    } catch (error) {
+      console.error("Failed to send email:", error)
+      // Continue with booking even if email fails
+    }
 
     // Show success message
     setMessage({

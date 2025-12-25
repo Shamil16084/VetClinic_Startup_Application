@@ -7,8 +7,28 @@
 
 ## Overview
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+VetBooking.az is a veterinary appointment booking platform designed for the Azerbaijani market. The application allows pet owners to easily browse available veterinarians and book appointments online.
+
+## Features
+
+- Browse 8 veterinarians with different specialties (Small Animals, Large Animals, Exotic Animals)
+- Real-time availability tracking
+- Simple appointment booking system
+- Email notifications for new bookings
+- Responsive design optimized for all devices
+- English interface with Azerbaijani doctor names and locations
+
+## Setup
+
+### Environment Variables
+
+To enable email notifications, add the following environment variable in the **Vars** section of the v0 sidebar or in your Vercel project settings:
+
+```
+RESEND_API_KEY=your_resend_api_key_here
+```
+
+Get your free API key from [Resend.com](https://resend.com).
 
 ## Deployment
 
